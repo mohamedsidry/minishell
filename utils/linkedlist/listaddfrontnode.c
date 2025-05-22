@@ -1,21 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isspace.c                                       :+:      :+:    :+:   */
+/*   listaddfrontnode.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: msidry <msidry@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/15 11:15:03 by msidry            #+#    #+#             */
-/*   Updated: 2025/05/17 16:36:38 by msidry           ###   ########.fr       */
+/*   Created: 2025/05/14 18:26:20 by msidry            #+#    #+#             */
+/*   Updated: 2025/05/15 18:48:44 by msidry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/header.h"
 
-int ft_isspace(int c)
+void listaddfrontnode(t_list **chain, t_list *node)
 {
-    unsigned char _char;
+    t_list *first;
 
-    _char = (unsigned char)c;
-    return ((_char >= 9 && _char <= 13) || _char == 32);
+    if(!chain || !node)
+        return ;
+    if (!(*chain))
+    {
+        *chain = node;
+        node->prev = NULL;
+        node->next = NULL;
+        return ;
+    }
+    first = listfindfirstnode(*chain);
+    while(first->prev)
+        first = first->prev;
+    node->prev = NULL;
+    node->next = first;
+    *chain = node;
 }

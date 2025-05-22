@@ -1,21 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isspace.c                                       :+:      :+:    :+:   */
+/*   listclearnodes.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: msidry <msidry@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/15 11:15:03 by msidry            #+#    #+#             */
-/*   Updated: 2025/05/17 16:36:38 by msidry           ###   ########.fr       */
+/*   Created: 2025/05/15 15:25:41 by msidry            #+#    #+#             */
+/*   Updated: 2025/05/15 18:49:28 by msidry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/header.h"
 
-int ft_isspace(int c)
+void listclearnodes(t_list **chain, void (del)(t_list *node))
 {
-    unsigned char _char;
+    t_list *tmp;
+    t_list *current;
+    t_list *first;
 
-    _char = (unsigned char)c;
-    return ((_char >= 9 && _char <= 13) || _char == 32);
+    if (!chain || !(*chain))
+        return ;
+    first = listfindfirstnode(*chain);
+    if (!first)
+        return;
+    current = first;
+    while(current)
+    {
+        tmp = current->next;
+        del(current);
+        current->content = NULL;
+        current = tmp;
+    }
+    *chain = NULL;
 }

@@ -1,21 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isspace.c                                       :+:      :+:    :+:   */
+/*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: msidry <msidry@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/15 11:15:03 by msidry            #+#    #+#             */
-/*   Updated: 2025/05/17 16:36:38 by msidry           ###   ########.fr       */
+/*   Created: 2025/05/14 17:55:13 by msidry            #+#    #+#             */
+/*   Updated: 2025/05/15 14:40:12 by msidry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/header.h"
 
-int ft_isspace(int c)
-{
-    unsigned char _char;
 
-    _char = (unsigned char)c;
-    return ((_char >= 9 && _char <= 13) || _char == 32);
+void *ft_calloc(size_t count, size_t size)
+{
+    size_t total;
+    size_t idx;
+    char *ptr;
+    void *memo;
+
+    total = count * size;
+    if (total <= 0)
+        return (NULL);
+    memo = (void *)malloc(total);
+    if (!memo)
+        return (NULL);
+    idx = 0;
+    ptr = (char *)memo;
+    while (idx < total)
+    {
+        *ptr = '\0';
+        ptr++;
+        idx++;
+    }
+    return (memo);
 }

@@ -1,21 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isspace.c                                       :+:      :+:    :+:   */
+/*   listfindfirstnode.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: msidry <msidry@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/15 11:15:03 by msidry            #+#    #+#             */
-/*   Updated: 2025/05/17 16:36:38 by msidry           ###   ########.fr       */
+/*   Created: 2025/05/15 15:28:21 by msidry            #+#    #+#             */
+/*   Updated: 2025/05/15 15:32:10 by msidry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/header.h"
 
-int ft_isspace(int c)
-{
-    unsigned char _char;
 
-    _char = (unsigned char)c;
-    return ((_char >= 9 && _char <= 13) || _char == 32);
+t_list *listfindfirstnode(t_list *list)
+{
+    if (!list)
+        return (NULL);
+    while (list->prev)
+        list = list->prev;
+    return (list);
 }

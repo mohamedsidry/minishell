@@ -1,21 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isspace.c                                       :+:      :+:    :+:   */
+/*   ft_2dfree.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: msidry <msidry@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/15 11:15:03 by msidry            #+#    #+#             */
-/*   Updated: 2025/05/17 16:36:38 by msidry           ###   ########.fr       */
+/*   Created: 2025/05/07 16:31:57 by msidry            #+#    #+#             */
+/*   Updated: 2025/05/15 14:40:15 by msidry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/header.h"
 
-int ft_isspace(int c)
+void	ft_2dfree(char **arr)
 {
-    unsigned char _char;
+	int	idx;
 
-    _char = (unsigned char)c;
-    return ((_char >= 9 && _char <= 13) || _char == 32);
+	idx = 0;
+	if (!arr)
+		return ;
+	while (arr[idx])
+	{
+		free (arr[idx]);
+		arr[idx] = NULL;
+		idx++;
+	}
+	free (arr);
 }

@@ -1,21 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isspace.c                                       :+:      :+:    :+:   */
+/*   ft_strncmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: msidry <msidry@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/15 11:15:03 by msidry            #+#    #+#             */
-/*   Updated: 2025/05/17 16:36:38 by msidry           ###   ########.fr       */
+/*   Created: 2025/05/14 19:09:01 by msidry            #+#    #+#             */
+/*   Updated: 2025/05/15 14:39:50 by msidry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/header.h"
 
-int ft_isspace(int c)
+int ft_strncmp(const char *str1, const char *str2, size_t n)
 {
-    unsigned char _char;
+    size_t	bytes;
 
-    _char = (unsigned char)c;
-    return ((_char >= 9 && _char <= 13) || _char == 32);
+	bytes = 0;
+	while (*str2 && (*str1 == *str2) && (bytes < n))
+	{
+		str1++;
+		str2++;
+		bytes++;
+	}
+	if (bytes == n)
+		return (0);
+	return ((unsigned char)*str1 - (unsigned char)*str2);
 }

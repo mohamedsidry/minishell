@@ -23,6 +23,5 @@ char *ft_trimspaces(const char *str)
 	if (!trimed)
 		return (NULL);
 	ft_strlcpy(trimed, start, len);
-	printf("trimed is '%s'\n", trimed);
 	return (trimed);
 }

@@ -1,21 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isspace.c                                       :+:      :+:    :+:   */
+/*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: msidry <msidry@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/15 11:15:03 by msidry            #+#    #+#             */
-/*   Updated: 2025/05/17 16:36:38 by msidry           ###   ########.fr       */
+/*   Created: 2025/05/17 16:39:44 by msidry            #+#    #+#             */
+/*   Updated: 2025/05/17 16:43:42 by msidry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/header.h"
 
-int ft_isspace(int c)
-{
-    unsigned char _char;
 
-    _char = (unsigned char)c;
-    return ((_char >= 9 && _char <= 13) || _char == 32);
+
+void *ft_strchr(void *ptr, int byte)
+{
+    char *charptr;
+    unsigned char c;
+
+    c = (unsigned char)byte;
+    charptr = (char *)ptr;
+    if (!ptr)
+        return (NULL);
+    while (*charptr && *charptr != c)
+        charptr++;
+    if (*charptr == c)
+        return (charptr);
+    else
+        return (NULL);
 }

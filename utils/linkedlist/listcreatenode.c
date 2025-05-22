@@ -1,21 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isspace.c                                       :+:      :+:    :+:   */
+/*   listcreatenode.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: msidry <msidry@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/15 11:15:03 by msidry            #+#    #+#             */
-/*   Updated: 2025/05/17 16:36:38 by msidry           ###   ########.fr       */
+/*   Created: 2025/05/14 17:52:26 by msidry            #+#    #+#             */
+/*   Updated: 2025/05/16 19:32:26 by msidry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/header.h"
 
-int ft_isspace(int c)
+t_list *listcreatenode(void *content)
 {
-    unsigned char _char;
+    t_list *node;
 
-    _char = (unsigned char)c;
-    return ((_char >= 9 && _char <= 13) || _char == 32);
+    node = ft_calloc(1, sizeof(t_list));
+    if (!node)
+        return (NULL);
+    node->content = ft_strdup(content);
+    if (!node->content)
+    {
+        free(node);
+        return (NULL);
+    }
+    return (node);
 }
