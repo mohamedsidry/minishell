@@ -15,6 +15,8 @@ int ft_isspace(int c);
 void *ft_calloc(size_t count, size_t size);
 void *ft_strchr(void *ptr, int byte);
 char *ft_joinstrs(size_t count, ...);
+char *ft_concatenate(const char *s1, const char *s2, const char *sep);
+
 // LIST HELPER FUNCTIONs !
 
 void listaddbacknode(t_list **chain, t_list *node);
@@ -36,6 +38,7 @@ void delete_node(t_list **node);
 void read_node(t_envnode *node);
 char *getvalue(t_list *lst, char *key);
 void setvalue(t_list *lst, char *key, char *newvalue);
+char **env_serializer(t_list *envlst);
 
 
 

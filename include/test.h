@@ -9,7 +9,7 @@
 # endif // UNITTEST
 void modenotifier(void);
 void echo(char *str);
-
+void  print_arr(char **arr);
 
 // UNIT TESTS 
 void run_unit_tests(void);

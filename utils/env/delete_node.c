@@ -15,10 +15,6 @@ void delete_node(t_list **node)
         free (envcontent->value);
         envcontent->key = NULL;
         envcontent->value = NULL;
-        //free(envcontent);
-        //tmp->content= NULL;
-        //free(*node);
-        //*node = NULL;
         listdeletenode(node);
     }
 }
