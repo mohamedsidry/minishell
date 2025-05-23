@@ -66,12 +66,14 @@ LINKEDLISTSRC = utils/linkedlist/listaddbacknode.c  \
 				utils/linkedlist/listsize.c
 
 
-TEST = test/modenotifier.c test/run_unit_tests.c test/echo.c test/print_arr.c
+TEST =	test/modenotifier.c test/run_unit_tests.c \
+		test/echo.c test/print_arr.c test/display_env.c
+
 
 SRCS = $(MAIN) $(UTILS) $(PARSING) $(LINKEDLISTSRC) $(ENVSRCS) $(TEST)
 
 vpath %.h include
-INCLUDES = header.h const.h error.h  test.h
+INCLUDES = header.h const.h error.h  test.h typedef.h utils.h
 
 DEPLIB = -lreadline
 

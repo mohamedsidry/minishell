@@ -12,19 +12,19 @@ int main(int argc, char *argv[], char *envp[])
 	cmds = NULL;
 	(void)argc;
 	(void)argv;
-	modenotifier();
-	run_unit_tests();
-	env_manager(&lstenv, envp, CREATE | UPDATE);
+	modenotifier(); // display message of debuging mode .
+	run_unit_tests(); // test functionality of pace of codes .
+	env_manager(&lstenv, envp, CREATE | UPDATE); // create and modify env var list
+	display_env(lstenv); //NOTE: display current env key:value .
 	while (true)
 	{
-		proreadline(PROMPT, &line, &lstenv);
-		ft_isexit(line, &lstenv);
-		add_history(line);
-		parsing_handler(&cmds, &line, &lstenv);
+		proreadline(PROMPT, &line, &lstenv); // prompt and store user input in line .
+		ft_isexit(line, &lstenv); // check if user input is exit !
+		add_history(line); // add user input to history
+		parsing_handler(&cmds, &line, &lstenv); // parse user input
 		printf("KEY   = '%s'\n", line);
 		printf("VALUE = '%s'\n", getvalue(lstenv, line));
-		nullstr(&line);
+		nullstr(&line); // free and set to null str !
 	}
-	free(line);
 	return (EXIT_SUCCESS);
 }

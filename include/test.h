@@ -2,6 +2,7 @@
 # define TEST_H
 
 #include <assert.h>
+#include "header.h"
 
 
 # ifndef UNITTEST
@@ -10,6 +11,7 @@
 void modenotifier(void);
 void echo(char *str);
 void  print_arr(char **arr);
+void display_env(t_list *envlst);
 
 // UNIT TESTS 
 void run_unit_tests(void);

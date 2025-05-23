@@ -2,6 +2,8 @@
 # define UTILS_H
 
 #include "typedef.h" 
+#include <stddef.h>
+
 
 // GENERAL HELPER FUNCTIONs !
 
