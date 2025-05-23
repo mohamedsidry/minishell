@@ -19,11 +19,6 @@ t_list *listcreatenode(void *content)
     node = ft_calloc(1, sizeof(t_list));
     if (!node)
         return (NULL);
-    node->content = ft_strdup(content);
-    if (!node->content)
-    {
-        free(node);
-        return (NULL);
-    }
+    node->content = content;
     return (node);
 }

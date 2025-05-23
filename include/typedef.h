@@ -46,16 +46,16 @@ typedef struct s_list
     struct s_list *prev;
 } t_list;
 
+typedef struct s_envnode
+{
+	char *key;
+	char *value;
+} t_envnode;
+
 typedef struct s_command
 {
 	char *exe;
 
 } t_command;
 
-
-typedef struct s_envnode
-{
-	char *key;
-	char *value;
-} t_envnode;
 #endif // TYPEDEF_H

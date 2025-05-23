@@ -15,10 +15,9 @@ void *env_manager(t_list **env, char **envp ,t_action crud)
         ptr = create_env(env, envp);
     if (crud & DELETE)
         ptr = delete_env(env, envp);
-//    if (crud & UPDATE) //TODO :
-//        ptr = update_env(env, envp);
     if (crud & READ)
         ptr = read_env(*env, envp);
+    //TODO: update_env
     return (ptr);
 }
 
@@ -45,7 +44,6 @@ static void *create_env(t_list **lstenv, char *envp[])
             listclearnodes(lstenv, delete_node);
             return (NULL);
         }
-        current->content = node;
         listaddbacknode(lstenv, current);
         idx++;
     }

@@ -12,13 +12,16 @@
 
 #include "../../include/header.h"
 
-void listdeletenode(t_list *node)
+void listdeletenode(t_list **node)
 {
-    if (!node)
+    t_list *tmp;
+    if (!node || !(*node))
         return ;
-    free(node->content);
-    node->content = NULL;
-    node->next = NULL;
-    node->prev = NULL;
-    free(node);
+    tmp = *node;
+    free(tmp->content);
+    tmp->content = NULL;
+    tmp->next = NULL;
+    tmp->prev = NULL;
+    free(*node);
+    *node = NULL;
 }

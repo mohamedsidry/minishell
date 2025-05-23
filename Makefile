@@ -44,7 +44,9 @@ UTILS = utils/general/nullstr.c  utils/general/ft_strcmp.c \
 ENVSRCS =	utils/env/env_manager.c \
 			utils/env/create_node.c \
 			utils/env/delete_node.c \
-			utils/env/read_node.c 
+			utils/env/read_node.c \
+			utils/env/getvalue.c \
+			utils/env/setvalue.c
 
 PARSING = utils/parsing/proreadline.c utils/parsing/is_exit.c \
 	  utils/parsing/parsing_handler.c
@@ -103,3 +105,11 @@ run: clean $(NAME)
 debug: 
 	@make run DEBUGMODE=1 SANITIZER=1 TESTUNIT=1
 	$(run)
+
+vfrun: clean $(NAME)
+	@valgrind --leak-check=full --show-leak-kinds=all ./$(NAME)
+
+runv: clean $(NAME)
+	@valgrind --leak-check=full --show-leak-kinds=all ./$(NAME)
+
+

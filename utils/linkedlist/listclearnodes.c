@@ -12,7 +12,7 @@
 
 #include "../../include/header.h"
 
-void listclearnodes(t_list **chain, void (del)(t_list *node))
+void listclearnodes(t_list **chain, void (del)(t_list **node))
 {
     t_list *tmp;
     t_list *current;
@@ -27,8 +27,7 @@ void listclearnodes(t_list **chain, void (del)(t_list *node))
     while(current)
     {
         tmp = current->next;
-        del(current);
-        current->content = NULL;
+        del(&current);
         current = tmp;
     }
     *chain = NULL;

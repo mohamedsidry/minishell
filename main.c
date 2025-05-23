@@ -15,15 +15,14 @@ int main(int argc, char *argv[], char *envp[])
 	modenotifier();
 	run_unit_tests();
 	env_manager(&lstenv, envp, CREATE);
-	env_manager(&lstenv, envp, READ);
-	env_manager(&lstenv, envp, DELETE);
 	while (true)
 	{
-		proreadline(PROMPT, &line);
-		ft_isexit(line);
+		proreadline(PROMPT, &line, &lstenv);
+		ft_isexit(line, &lstenv);
 		add_history(line);
-		parsing_handler(&cmds, &line, &envp);
-		printf("line is '%s'\n", line);
+		parsing_handler(&cmds, &line, &lstenv);
+		printf("KEY   = '%s'\n", line);
+		printf("VALUE = '%s'\n", getvalue(lstenv, line));
 		nullstr(&line);
 	}
 	free(line);

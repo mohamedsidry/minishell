@@ -1,20 +1,24 @@
 #include "../../include/header.h"
 
-void delete_node(t_list *node)
+void delete_node(t_list **node)
 {
     t_envnode *envcontent;
+    t_list *tmp;
 
-    if (!node)
+    if (!node || !(*node))
         return ;
-
-    envcontent = node->content;
+    tmp = *node;
+    envcontent = (t_envnode *)tmp->content;
     if (envcontent)
     {
         free (envcontent->key);
         free (envcontent->value);
         envcontent->key = NULL;
         envcontent->value = NULL;
-
+        //free(envcontent);
+        //tmp->content= NULL;
+        //free(*node);
+        //*node = NULL;
+        listdeletenode(node);
     }
-    listdeletenode(node);
 }
