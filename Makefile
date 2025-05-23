@@ -39,7 +39,8 @@ UTILS = utils/general/nullstr.c  utils/general/ft_strcmp.c \
 		utils/general/ft_strlcpy.c utils/general/ft_calloc.c \
 		utils/general/ft_2dfree.c utils/general/ft_strncmp.c \
 		utils/general/ft_strtrim.c utils/general/ft_isspace.c \
-		utils/general/ft_stripspace.c utils/general/ft_trimbothends.c 
+		utils/general/ft_stripspace.c utils/general/ft_trimbothends.c \
+		utils/general/ft_joinstrs.c
 		
 ENVSRCS =	utils/env/env_manager.c \
 			utils/env/create_node.c \

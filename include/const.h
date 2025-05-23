@@ -11,4 +11,10 @@
 
 # define EXITCMD "exit"
 
+
+
+# define PWD "PWD"
+# define PATH "PATH"
+# define SHLVL "SHLVL"
+
 #endif // CONST_H

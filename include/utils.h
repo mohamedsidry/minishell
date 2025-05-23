@@ -14,6 +14,7 @@ char *ft_trimspaces(const char *str);
 int ft_isspace(int c);
 void *ft_calloc(size_t count, size_t size);
 void *ft_strchr(void *ptr, int byte);
+char *ft_joinstrs(size_t count, ...);
 // LIST HELPER FUNCTIONs !
 
 void listaddbacknode(t_list **chain, t_list *node);

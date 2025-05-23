@@ -6,8 +6,9 @@
 # include <stdlib.h>
 # include <readline/readline.h>
 # include <readline/history.h>
-#include <stdbool.h>
-
+# include <stdbool.h>
+# include <stdarg.h>
+# include <stddef.h>
 # include "const.h"
 # include "utils.h"
 # include "error.h"

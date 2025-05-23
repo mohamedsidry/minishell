@@ -14,7 +14,7 @@ int main(int argc, char *argv[], char *envp[])
 	(void)argv;
 	modenotifier();
 	run_unit_tests();
-	env_manager(&lstenv, envp, CREATE);
+	env_manager(&lstenv, envp, CREATE | UPDATE);
 	while (true)
 	{
 		proreadline(PROMPT, &line, &lstenv);

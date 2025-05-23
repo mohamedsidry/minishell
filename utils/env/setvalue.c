@@ -9,7 +9,7 @@ void setvalue(t_list *lst, char *key, char *newvalue)
     while (lst)
     {
         keyval = (t_envnode *)lst->content;
-        if (ft_strcmp(key, keyval->key))
+        if (ft_strcmp(key, keyval->key) == 0)
         {
             nullstr(&keyval->value);
             keyval->value = newvalue;
