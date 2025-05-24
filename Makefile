@@ -42,7 +42,8 @@ UTILS = utils/general/nullstr.c  utils/general/ft_strcmp.c \
 		utils/general/ft_stripspace.c utils/general/ft_trimbothends.c \
 		utils/general/ft_joinstrs.c utils/general/ft_concatenate.c \
 		utils/general/ft_ispipe.c utils/general/ft_isquote.c \
-		utils/general/ft_isredirection.c utils/general/ft_isunitbreaker.c 
+		utils/general/ft_isredirection.c utils/general/ft_isunitbreaker.c \
+		utils/general/skip_space.c
 		
 ENVSRCS =	utils/env/env_manager.c \
 			utils/env/create_node.c \
@@ -52,8 +53,8 @@ ENVSRCS =	utils/env/env_manager.c \
 			utils/env/setvalue.c \
 			utils/env/env_serializer.c 
 
-PARSING = utils/parsing/proreadline.c utils/parsing/is_exit.c \
-	  utils/parsing/parsing_handler.c
+PARSING =	utils/parsing/proreadline.c utils/parsing/is_exit.c \
+	  		utils/parsing/parsing_handler.c utils/parsing/lixer.c
 
 LINKEDLISTSRC = utils/linkedlist/listaddbacknode.c  \
 				utils/linkedlist/listaddfrontnode.c \
@@ -70,7 +71,7 @@ LINKEDLISTSRC = utils/linkedlist/listaddbacknode.c  \
 
 TEST =	test/modenotifier.c test/run_unit_tests.c \
 		test/echo.c test/print_arr.c test/display_env.c \
-		test/print_token.c
+		test/display_tokens.c
 
 
 SRCS = $(MAIN) $(UTILS) $(PARSING) $(LINKEDLISTSRC) $(ENVSRCS) $(TEST)

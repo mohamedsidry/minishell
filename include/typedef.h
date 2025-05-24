@@ -16,6 +16,7 @@ typedef enum e_metachar
 	D_QUOTE = '"',
 	SEMICOLON = ';',
 	BACKSLASH = '\\',
+	BACKTICK = '`',
 
 } t_metachar;
 

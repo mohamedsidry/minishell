@@ -2,7 +2,7 @@
 
 
 
-void print_token(t_list *lst)
+void display_tokens(t_list *lst)
 {
     if (!lst)
     {

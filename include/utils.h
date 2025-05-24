@@ -22,6 +22,7 @@ int ft_isquote(unsigned char c);
 int ft_ispipe(unsigned char c);
 int ft_isredirection(unsigned char c);
 int ft_isunitbreaker(unsigned char c);
+size_t skip_space(char *line, size_t *idx);
 
 // LIST HELPER FUNCTIONs !
 
