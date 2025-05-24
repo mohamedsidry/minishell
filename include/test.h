@@ -12,6 +12,7 @@ void modenotifier(void);
 void echo(char *str);
 void  print_arr(char **arr);
 void display_env(t_list *envlst);
+void print_token(t_list *lst);
 
 // UNIT TESTS 
 void run_unit_tests(void);

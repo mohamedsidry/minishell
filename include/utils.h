@@ -18,6 +18,10 @@ void *ft_calloc(size_t count, size_t size);
 void *ft_strchr(void *ptr, int byte);
 char *ft_joinstrs(size_t count, ...);
 char *ft_concatenate(const char *s1, const char *s2, const char *sep);
+int ft_isquote(unsigned char c);
+int ft_ispipe(unsigned char c);
+int ft_isredirection(unsigned char c);
+int ft_isunitbreaker(unsigned char c);
 
 // LIST HELPER FUNCTIONs !
 

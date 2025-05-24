@@ -22,8 +22,6 @@ int main(int argc, char *argv[], char *envp[])
 		ft_isexit(line, &lstenv); // check if user input is exit !
 		add_history(line); // add user input to history
 		parsing_handler(&cmds, &line, &lstenv); // parse user input
-		printf("KEY   = '%s'\n", line);
-		printf("VALUE = '%s'\n", getvalue(lstenv, line));
 		nullstr(&line); // free and set to null str !
 	}
 	return (EXIT_SUCCESS);
