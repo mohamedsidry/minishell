@@ -22,8 +22,11 @@ typedef enum e_metachar
 
 typedef enum s_token
 {
-	WORD,
-	REDIRECTION,
+	IN_REDIRECTION = 1,
+	OUT_REDIRECTION,
+	LIMITER,
+	AND,
+	OR,
 	APPEND,
 	HEREDOC,
 	COMMAND,

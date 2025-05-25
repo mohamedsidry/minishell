@@ -1,34 +1,34 @@
 #include "../../include/header.h"
 
-static size_t redirection_handler(t_list **units, char *line, size_t *pos);
-static size_t pipe_handler(t_list **units, char *line, size_t *pos);
-static size_t quotes_handler(t_list **units, char *line, size_t *pos);
-static size_t word_handler(t_list **units, char *line, size_t *pos);
+static size_t redirection_handler(t_list **tokens, char *line, size_t *pos);
+static size_t pipe_handler(t_list **tokens, char *line, size_t *pos);
+static size_t quotes_handler(t_list **tokens, char *line, size_t *pos);
+static size_t word_handler(t_list **tokens, char *line, size_t *pos);
 
-void lexer(t_list **units, char *line)
+void tokenizer(t_list **tokens, char *line)
 {
 	size_t idx;
 	size_t result;
 
 	idx = 0;
-	if (!units || !line)
+	if (!tokens || !line)
 		return ;
 	while (line[idx])
 	{
 		if (ft_isspace(line[idx]))
 			result = skip_space(&line[idx], &idx);
 		else if (ft_isredirection(line[idx]))
-			result = redirection_handler(units, &line[idx], &idx);
+			result = redirection_handler(tokens, &line[idx], &idx);
 		else if (ft_ispipe(line[idx]))
-			result = pipe_handler(units, &line[idx], &idx);
+			result = pipe_handler(tokens, &line[idx], &idx);
 		else if (ft_isquote(line[idx]))
-			result = quotes_handler(units, &line[idx], &idx);
+			result = quotes_handler(tokens, &line[idx], &idx);
 		else 
-			result = word_handler(units, &line[idx], &idx);
+			result = word_handler(tokens, &line[idx], &idx);
 		if (result == FAILURE)
 		{
-			listclearnodes(units, listdeletenode);
-			//write(2, "Error : lexer failure\n", 24);
+			listclearnodes(tokens, listdeletenode);
+			write(2, ERRTOKEN, ft_strlen(ERRTOKEN));
 			return ;
 		}	
 	}
@@ -36,7 +36,7 @@ void lexer(t_list **units, char *line)
 
 
 
-static size_t redirection_handler(t_list **units, char *line, size_t *pos)
+static size_t redirection_handler(t_list **tokens, char *line, size_t *pos)
 {
 	t_list *node;
 	size_t idx;
@@ -55,13 +55,13 @@ static size_t redirection_handler(t_list **units, char *line, size_t *pos)
 		nullstr(&content);
 		return(FAILURE);
 	}
-	listaddbacknode(units, node);
+	listaddbacknode(tokens, node);
 	*pos += idx;
 	return (SUCCESS);
 }
 
 
-static size_t pipe_handler(t_list **units, char *line, size_t *pos)
+static size_t pipe_handler(t_list **tokens, char *line, size_t *pos)
 {
 	t_list *node;
 	size_t idx;
@@ -80,13 +80,13 @@ static size_t pipe_handler(t_list **units, char *line, size_t *pos)
 		nullstr(&content);
 		return(FAILURE);
 	}
-	listaddbacknode(units, node);
+	listaddbacknode(tokens, node);
 	*pos += idx;
 	return (SUCCESS);
 }
 
 
-static size_t quotes_handler(t_list **units, char *line, size_t *pos)
+static size_t quotes_handler(t_list **tokens, char *line, size_t *pos)
 {
 	t_list *node;
 	size_t idx;
@@ -115,14 +115,14 @@ static size_t quotes_handler(t_list **units, char *line, size_t *pos)
 		nullstr(&content);
 		return(FAILURE);
 	}
-	listaddbacknode(units, node);
+	listaddbacknode(tokens, node);
 	*pos += idx;
 	return (SUCCESS);
 }
 
 
 
-static size_t word_handler(t_list **units, char *line, size_t *pos)
+static size_t word_handler(t_list **tokens, char *line, size_t *pos)
 {
 	t_list *node;
 	size_t idx;
@@ -155,7 +155,7 @@ static size_t word_handler(t_list **units, char *line, size_t *pos)
 		nullstr(&content);
 		return(FAILURE);
 	}
-	listaddbacknode(units, node);
+	listaddbacknode(tokens, node);
 	*pos += idx;
 	return (SUCCESS);
 }

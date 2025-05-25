@@ -54,7 +54,7 @@ ENVSRCS =	utils/env/env_manager.c \
 			utils/env/env_serializer.c 
 
 PARSING =	utils/parsing/proreadline.c utils/parsing/is_exit.c \
-	  		utils/parsing/parsing_handler.c utils/parsing/lexer.c
+	  		utils/parsing/parsing_handler.c utils/parsing/tokenizer.c
 
 LINKEDLISTSRC = utils/linkedlist/listaddbacknode.c  \
 				utils/linkedlist/listaddfrontnode.c \
@@ -88,9 +88,9 @@ OBJS = $(SRCS:.c=.o)
 	@echo "\033[1;33m⚙️​ compiling :\033[0m\033[0;35m $< \033[0m"
 	@$(CC) $(CFLAGS) $(CSTAGE) $< -o $@
 
-$(NAME): $(OBJS) $(INCLUDES)
+$(NAME): $(OBJS)
 	@echo "\033[1;33m​🔗​​linking   :\033[0m\033[0;35m $@ \033[0m"
-	@$(CC) $(CFLAGS) $^ $(DEPLIB) -o $@
+	@$(CC) $(CFLAGS) $(DEPLIB) $(OBJS) -o $@
 	@echo "\033[1;33m🚀$(NAME) : \033[0mbuilding finished !"
 
 
@@ -107,10 +107,11 @@ all: $(NAME)
 
 .PHONY: clean fclean re all debug run
 
-run: clean $(NAME)
+run: $(NAME)
+	@make clean
 	@./$(NAME)
 
-debug: 
+debug:  
 	@make run DEBUGMODE=1 SANITIZER=1 TESTUNIT=1
 	$(run)
 
