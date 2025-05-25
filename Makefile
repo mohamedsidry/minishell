@@ -54,7 +54,7 @@ ENVSRCS =	utils/env/env_manager.c \
 			utils/env/env_serializer.c 
 
 PARSING =	utils/parsing/proreadline.c utils/parsing/is_exit.c \
-	  		utils/parsing/parsing_handler.c utils/parsing/lixer.c
+	  		utils/parsing/parsing_handler.c utils/parsing/lexer.c
 
 LINKEDLISTSRC = utils/linkedlist/listaddbacknode.c  \
 				utils/linkedlist/listaddfrontnode.c \
