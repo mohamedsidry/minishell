@@ -9,6 +9,7 @@ void parsing_handler(t_command **cmds, char **line, t_list **envlst)
 	(void)envlst;
 
 	lexer(&tokens, *line); // TODO: tokenize and add context to tokens ! .
+	validator(&tokens);
 	//expander(&units, envlst);
 	//tokenvaliditor(&units); //VALIDATE '""' '| spc |' '|' in start | at end 
 	//cmds_generater(cmds, &units); //TODO: GENERATE commands !

@@ -4,6 +4,8 @@
 static void map_type(t_token token);
 void display_tokens(t_list *lst)
 {
+    if (!DEBUGMODE)
+        return ;
     if (!lst)
     {
         printf("EMPTY TOKEN LIST !\n");

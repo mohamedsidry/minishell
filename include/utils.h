@@ -29,11 +29,6 @@ int ft_issemicolon(unsigned char c);
 int ft_isaflag(char *arg);
 int ft_startwith(char *str, unsigned char c);
 
-
-t_token ft_isoperator(char *op);
-t_token getoperatortype(char *token);
-int ft_op_isappendredirect(char *token);
-t_token getappendredirecttype(char *token);
 // LIST HELPER FUNCTIONs !
 
 void listaddbacknode(t_list **chain, t_list *node);
@@ -58,5 +53,9 @@ void setvalue(t_list *lst, char *key, char *newvalue);
 char **env_serializer(t_list *envlst);
 
 
+
+// validation functions 
+
+void validator(t_list **tokens);
 
 #endif // UTILS_H

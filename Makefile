@@ -59,6 +59,8 @@ ENVSRCS =	utils/env/env_manager.c \
 PARSING =	utils/parsing/proreadline.c utils/parsing/is_exit.c \
 	  		utils/parsing/parsing_handler.c utils/parsing/lexer.c
 
+VALIDATION = utils/validation/validator.c
+
 LINKEDLISTSRC = utils/linkedlist/listaddbacknode.c  \
 				utils/linkedlist/listaddfrontnode.c \
 				utils/linkedlist/listclearnodes.c \
@@ -77,7 +79,7 @@ TEST =	test/modenotifier.c test/run_unit_tests.c \
 		test/display_tokens.c
 
 
-SRCS = $(MAIN) $(UTILS) $(PARSING) $(LINKEDLISTSRC) $(ENVSRCS) $(TEST)
+SRCS = $(MAIN) $(UTILS) $(PARSING) $(LINKEDLISTSRC) $(ENVSRCS) $(VALIDATION) $(TEST)
 
 vpath %.h include
 INCLUDES = header.h const.h error.h  test.h typedef.h utils.h

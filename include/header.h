@@ -19,7 +19,6 @@ void *env_manager(t_list **env, char **envp, t_action crud);
 void ft_isexit(char *input, t_list **envlst);
 void proreadline(char *prompt, char **strptr, t_list **envlst);
 void parsing_handler(t_command **cmds, char **line, t_list **envlst);
-void tokenizer(t_list **units, char *line);
 void lexer(t_list **token, char *line);
 
 #endif // HEADER_H
