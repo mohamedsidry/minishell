@@ -268,7 +268,7 @@ static t_token meta_map_context(char *current, t_jobcontext *nextcontext)
 	else if (!ft_strcmp(current, STR_APPEND))
 		return (*nextcontext = OUTFILE, APPEND);
 	else if (!ft_strcmp(current, STR_HEREDOC))
-		return (*nextcontext = LIMIT, LIMITER);
+		return (*nextcontext = LIMIT, APPEND);
 	return (*nextcontext = DEFAULT, COMMAND);
 }
 
@@ -285,7 +285,7 @@ static t_token other_map_context(char *current, t_jobcontext *nextcontext)
 	else if (prev == OUTFILE)
 		return (*nextcontext = CMD, FILE_OUT);
 	else if (prev == LIMIT)
-		return (*nextcontext = CMD, FILE_APPEND);
+		return (*nextcontext = CMD, LIMITER);
 	else
 		return (COMMAND);
 }
