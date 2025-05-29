@@ -29,6 +29,7 @@ endif
 ifeq ($(SANITIZER), 1)
 	CFLAGS += $(EXTRAFLAGS)
 endif
+
 # Sources Includes and Depandencies .
 
 MAIN = main.c
@@ -43,7 +44,9 @@ UTILS = utils/general/nullstr.c  utils/general/ft_strcmp.c \
 		utils/general/ft_joinstrs.c utils/general/ft_concatenate.c \
 		utils/general/ft_ispipe.c utils/general/ft_isquote.c \
 		utils/general/ft_isredirection.c utils/general/ft_isunitbreaker.c \
-		utils/general/skip_space.c
+		utils/general/skip_space.c utils/general/ft_ismetachar.c \
+		utils/general/ft_isampersand.c utils/general/ft_issemicolon.c \
+		utils/general/ft_startwith.c
 		
 ENVSRCS =	utils/env/env_manager.c \
 			utils/env/create_node.c \
@@ -54,7 +57,7 @@ ENVSRCS =	utils/env/env_manager.c \
 			utils/env/env_serializer.c 
 
 PARSING =	utils/parsing/proreadline.c utils/parsing/is_exit.c \
-	  		utils/parsing/parsing_handler.c utils/parsing/tokenizer.c
+	  		utils/parsing/parsing_handler.c utils/parsing/lexer.c
 
 LINKEDLISTSRC = utils/linkedlist/listaddbacknode.c  \
 				utils/linkedlist/listaddfrontnode.c \
@@ -78,6 +81,8 @@ SRCS = $(MAIN) $(UTILS) $(PARSING) $(LINKEDLISTSRC) $(ENVSRCS) $(TEST)
 
 vpath %.h include
 INCLUDES = header.h const.h error.h  test.h typedef.h utils.h
+
+# LIB FOR READLINE and addhitory functions !
 
 DEPLIB = -lreadline
 

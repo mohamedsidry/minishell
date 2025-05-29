@@ -3,34 +3,42 @@
 
 typedef enum e_metachar
 {
-	_SPACE = ' ',
-	_METATAB = '\t',
-	_NEWLINE = '\n',
-	PIPE = '|',
-	REDIRECT_IN = '<',
-	REDIRECT_OUT = '>',
-	ANDCHAR = '&',
-	O_PARANTHESES = '(',
-	C_PARANTHESES = ')',
-	S_QUOTE = '\'',
-	D_QUOTE = '"',
-	SEMICOLON = ';',
-	BACKSLASH = '\\',
-	BACKTICK = '`',
+	CHAR_SPACE = ' ',
+	CHAR_TAB = '\t',
+	CHAR_NEWLINE = '\n',
+	CHAR_PIPE = '|',
+	CHAR_REDIRECT_IN = '<',
+	CHAR_REDIRECT_OUT = '>',
+	CHAR_AMPERSAND = '&',
+	CHAR_OPARANTHESES = '(',
+	CHAR_CPARANTHESES = ')',
+	CHAR_SQUOTE = '\'',
+	CHAR_DQUOTE = '"',
+	CHAR_SEMICOLON = ';',
+	CHAR_BACKSLASH = '\\',
+	CHAR_BACKTICK = '`',
+	CHAR_HYPHEN = '-',
 
 } t_metachar;
 
 typedef enum s_token
 {
-	IN_REDIRECTION = 1,
-	OUT_REDIRECTION,
-	LIMITER,
-	AND,
-	OR,
+	COMMAND = 1,
+	ARG,
+	FILE_IN,
+	FILE_OUT,
+	REDIRECT_IN,
+	REDIRECT_OUT,
+	FILE_APPEND,
 	APPEND,
 	HEREDOC,
-	COMMAND,
-	COMMANDARG,
+	LIMITER,
+	PIPE,
+	AND,
+	OR,
+	RUNBACKGROUND,
+	PIPEAND,
+	SEQUENCE, //sequence
 } t_token;
 
 typedef enum s_action
@@ -45,7 +53,7 @@ typedef enum s_action
 typedef struct s_list
 {
     void *content;
-    t_token token;
+    t_token type;
     struct s_list *next;
     struct s_list *prev;
 } t_list;
@@ -59,6 +67,8 @@ typedef struct s_envnode
 typedef struct s_command
 {
 	char *exe;
+	int runinbackground;
+	int waitforit;
 
 } t_command;
 

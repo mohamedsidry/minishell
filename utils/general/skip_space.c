@@ -7,7 +7,6 @@ size_t skip_space(char *line, size_t *pos)
 	idx = 0;
 	while (line[idx] && ft_isspace(line[idx]))
 		idx++;
-	idx += *pos;
-	*pos = idx;
-	return (idx);
+	*pos += idx;
+	return (SUCCESS);
 }

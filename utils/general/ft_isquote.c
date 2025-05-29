@@ -4,5 +4,5 @@
 
 int ft_isquote(unsigned char c)
 {
-    return (c == S_QUOTE || c == D_QUOTE || c == BACKTICK);
+    return (c == CHAR_SQUOTE || c == CHAR_DQUOTE || c == CHAR_BACKTICK);
 }

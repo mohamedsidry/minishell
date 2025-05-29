@@ -16,4 +16,18 @@
 # define PATH "PATH"
 # define SHLVL "SHLVL"
 
+
+// OPERATORES 
+
+# define STR_PIPE "|"
+# define STR_RE_IN "<"
+# define STR_RE_OUT ">"
+# define STR_AND "&&"
+# define STR_AMPERSAND "&"
+# define STR_PIPEAND "|&"
+# define STR_OR "||"
+# define STR_HEREDOC "<<"
+# define STR_APPEND ">>"
+# define STR_SEMICOLON ";"
+
 #endif // CONST_H

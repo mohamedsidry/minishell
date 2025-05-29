@@ -1,18 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isspace.c                                       :+:      :+:    :+:   */
+/*   ft_ismetachar.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: msidry <msidry@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/15 11:15:03 by msidry            #+#    #+#             */
-/*   Updated: 2025/05/29 11:04:21 by msidry           ###   ########.fr       */
+/*   Created: 2025/05/29 10:08:36 by msidry            #+#    #+#             */
+/*   Updated: 2025/05/29 11:02:00 by msidry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/header.h"
 
-int ft_isspace(unsigned char c)
+size_t ft_ismetachar(unsigned char c)
 {
-    return ((c >= 9 && c <= 13) || c == 32);
+    if (c == CHAR_PIPE || c == CHAR_REDIRECT_IN || c == CHAR_REDIRECT_OUT
+        || c == CHAR_AMPERSAND || c == CHAR_SEMICOLON) // '(' AND ')' could be added here ! .
+        return (1);
+    return (0);
 }

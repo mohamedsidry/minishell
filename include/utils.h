@@ -13,7 +13,7 @@ size_t ft_strlen(const char *str);
 size_t ft_strlcpy(char *dst, const char *src, size_t n);
 char *ft_strdup(const char *str);
 char *ft_trimspaces(const char *str);
-int ft_isspace(int c);
+int ft_isspace(unsigned char  c);
 void *ft_calloc(size_t count, size_t size);
 void *ft_strchr(void *ptr, int byte);
 char *ft_joinstrs(size_t count, ...);
@@ -23,7 +23,17 @@ int ft_ispipe(unsigned char c);
 int ft_isredirection(unsigned char c);
 int ft_isunitbreaker(unsigned char c);
 size_t skip_space(char *line, size_t *idx);
+size_t ft_ismetachar(unsigned char c);
+int ft_isampersand(unsigned char c);
+int ft_issemicolon(unsigned char c);
+int ft_isaflag(char *arg);
+int ft_startwith(char *str, unsigned char c);
 
+
+t_token ft_isoperator(char *op);
+t_token getoperatortype(char *token);
+int ft_op_isappendredirect(char *token);
+t_token getappendredirecttype(char *token);
 // LIST HELPER FUNCTIONs !
 
 void listaddbacknode(t_list **chain, t_list *node);

@@ -6,7 +6,7 @@
 /*   By: msidry <msidry@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 12:44:46 by msidry            #+#    #+#             */
-/*   Updated: 2025/05/15 13:47:49 by msidry           ###   ########.fr       */
+/*   Updated: 2025/05/29 10:51:44 by msidry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ char *ft_trimbothends(const char *str, t_metachar target)
     start = (char *)str;
     end = (char *)str + ft_strlen(str) - 1;        
     while (*start && start != end && ((t_metachar)(*start) == target
-            && ((t_metachar)(*end) == target && *(end - 1) != BACKSLASH)))
+            && ((t_metachar)(*end) == target && *(end - 1) != CHAR_BACKSLASH)))
     {
         start++;
         end--;

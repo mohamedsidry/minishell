@@ -3,5 +3,5 @@
 
 int ft_isunitbreaker(unsigned char c)
 {
-    return (c == PIPE || ft_isredirection(c) || ft_isspace(c));
+    return (c == CHAR_PIPE || ft_isredirection(c) || ft_isspace(c));
 }

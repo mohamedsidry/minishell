@@ -18,4 +18,15 @@ void display_tokens(t_list *lst);
 void run_unit_tests(void);
 void test_trimspaces(char *input, char *exp, char *(fun)(const char *));
 
+typedef enum s_jobcontext 
+{
+    DEFAULT,
+    CMD,
+    CMDARG,
+    INFILE,
+    OUTFILE,
+    LIMIT,
+    REDIRECTION,
+} t_jobcontext;
+
 #endif //TEST_H

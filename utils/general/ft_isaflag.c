@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isspace.c                                       :+:      :+:    :+:   */
+/*   ft_isaflag.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: msidry <msidry@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/15 11:15:03 by msidry            #+#    #+#             */
-/*   Updated: 2025/05/29 11:04:21 by msidry           ###   ########.fr       */
+/*   Created: 2025/05/29 11:23:18 by msidry            #+#    #+#             */
+/*   Updated: 2025/05/29 11:28:56 by msidry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/header.h"
 
-int ft_isspace(unsigned char c)
+int ft_isaflag(char *arg)
 {
-    return ((c >= 9 && c <= 13) || c == 32);
+    return (ft_startwith(arg, CHAR_HYPHEN))
 }

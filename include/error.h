@@ -3,5 +3,5 @@
 
 
 # define ERRMEMO "\033[1;31mError : Memory Failure !\033[0m\n"
-# define ERRTOKEN "\03[1;31mError : Tokenizer Failure !\033[0m\n"
+# define ERRTOKEN "\033[1;31mError : Tokenizer Failure !\033[0m\n"
 #endif //ERROR_H
