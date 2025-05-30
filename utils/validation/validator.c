@@ -6,7 +6,7 @@
 /*   By: msidry <msidry@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 14:48:31 by msidry            #+#    #+#             */
-/*   Updated: 2025/05/29 15:23:27 by msidry           ###   ########.fr       */
+/*   Updated: 2025/05/30 10:37:45 by msidry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void validator(t_list **tokens)
     {
         printf("INVALID : unclosed quotes !\n");
         listclearnodes(tokens, listdeletenode);
+        return ;
     }
     if (!validsupportedmeta(*tokens))
     {
@@ -60,15 +61,30 @@ int balancedquotes(char *str)
         return (0);
     while (*str)
     {
-        if (*str == CHAR_SQUOTE)
-            squote++;
-        else if (*str == CHAR_DQUOTE)
-            dquote++;
-        else if (*str == CHAR_BACKTICK)
-            backtick++;
+        if (*str == CHAR_SQUOTE && dquote % 2 == 0 && backtick % 2 == 0)
+        {
+            if (squote != 0)
+                squote--;
+            else
+                squote++;
+        }
+        else if (*str == CHAR_DQUOTE && squote % 2 == 0 && backtick % 2 == 0)
+        {
+            if (dquote != 0)
+                dquote--;
+            else
+                dquote++;
+        }
+        else if (*str == CHAR_BACKTICK && squote % 2 == 0 && dquote % 2 == 0)
+        {
+            if (backtick != 0)
+                backtick--;
+            else
+                backtick++;
+        }
         str++;
     }
-    return (squote % 2 == 0 && dquote % 2 == 0 && backtick % 2 == 0);
+    return (squote == 0 && dquote == 0 && backtick == 0);
 }
 
 int validsupportedmeta(t_list *token)
@@ -87,5 +103,11 @@ int validsupportedmeta(t_list *token)
 
 int unsupportedcheck(char *str)
 {
-    return (!ft_strcmp(str, STR_AND) || !ft_strcmp(str, STR_OR));
+    return ( 1 == 0
+        || !ft_strcmp(str, STR_AND)
+        || !ft_strcmp(str, STR_OR)
+        || !ft_strcmp(str, STR_SEMICOLON)
+        || !ft_strcmp(str, STR_AMPERSAND)
+        || !ft_strcmp(str, STR_PIPEAND)
+        );
 }
