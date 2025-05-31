@@ -114,13 +114,11 @@ all: $(NAME)
 
 .PHONY: clean fclean re all debug run
 
-run: $(NAME)
-	@make clean
+run: $(NAME) clean
 	@./$(NAME)
 
 debug:  
 	@make run DEBUGMODE=1 SANITIZER=1 TESTUNIT=1
-	$(run)
 
 vfrun: clean $(NAME)
 	@valgrind --leak-check=full --show-leak-kinds=all ./$(NAME)
