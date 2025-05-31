@@ -6,7 +6,9 @@
 # ifndef DEBUGMODE
 # define DEBUGMODE 0
 # endif // DEBUGMODE
-
+# ifndef NAME
+#  define NAME "minishell"
+# endif // NAME
 # ifndef PROMPT
 #  define PROMPT "\033[1;32mminishell $> \033[0m"
 # endif // PROMPT
@@ -21,10 +23,10 @@
 
 # define STR_PIPE "|"
 # define STR_RE_IN "<"
-# define STR_RE_OUT ">"
+# define STR_RE_OUT ">" //NOTE: ">|" is valid forecreate but we don't need to handle it  .
 # define STR_AND "&&"
-# define STR_AMPERSAND "&"
-# define STR_PIPEAND "|&"
+# define STR_AMPERSAND "&" //NOTE: "&>" is valid but we dont need to handle redirect stdin and stdout .
+# define STR_PIPEAND "|&" //NOTE: no need for it since we dont handle redirect stderr .
 # define STR_OR "||"
 # define STR_HEREDOC "<<"
 # define STR_APPEND ">>"

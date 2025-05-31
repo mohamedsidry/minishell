@@ -129,3 +129,12 @@ runv: clean $(NAME)
 	@valgrind --leak-check=full --show-leak-kinds=all ./$(NAME)
 
 
+norms:
+	@echo $(CHECKINGNORMS)
+	@norminette | grep 'Error!' && echo $(KO) || echo $(OK)
+
+CHECKINGNORMS = "\033[1;33mNorminette ...\033[0m"
+
+
+OK="\033[1;32mNorminette OK!\033[0m"
+KO="\033[1;31mNorminette KO!\033[0m"

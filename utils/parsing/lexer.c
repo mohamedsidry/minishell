@@ -16,20 +16,14 @@ void lexer(t_list **tokens, char *line)
 {
 	size_t idx;
 	size_t result;
-	t_list *last;
 
 	idx = 0;
 	if (!tokens || !line)
 		return ;
-	context_guarder(line, 0);
+	context_guarder(line, 0); // NOTE: save prev token state a.k.a "type" of prev token ! 0 just a flag to reset it each time we parce a new str !
 	while (line[idx])
 	{
-		if (ft_isspace(line[idx]))
-		{
-			result = skip_space(&line[idx], &idx);
-			continue;
-		}
-		else if (ft_ismetachar(line[idx]))
+		if (ft_ismetachar(line[idx]))
 			result = metachar_handler(tokens, &line[idx], &idx);
 		else if (ft_isquote(line[idx]))
 			result = quotes_handler(tokens, &line[idx], &idx);
@@ -41,19 +35,20 @@ void lexer(t_list **tokens, char *line)
 			write(2, ERRTOKEN, ft_strlen(ERRTOKEN));
 			return ;
 		}
-		last = 	listfindlastnode(*tokens);
-		if (last)
-			last->type = context_guarder((char *)last->content, 1);
 	}
 }
 
 static size_t metachar_handler(t_list **tokens, char *line, size_t *pos)
 {
 	size_t result;
+	// NOTE: metachar are char that separate tokens if they are not quoted 
+	// example : |, <, &, ;,  \n, \t, space, ... 
 
 	result = 0;
 	if (!line)
 		return (0);
+	else if (ft_isspace(*line))
+		result = skip_space(line, pos);
 	else if (ft_ispipe(*line))
 		result = pipe_handler(tokens, line, pos);
 	else if (ft_isredirection(*line))
@@ -83,6 +78,7 @@ static size_t semicolon_hanndler(t_list **tokens, char *line, size_t *pos)
 		nullstr(&content);
 		return(FAILURE);
 	}
+	node->type = context_guarder(content, 1);
 	listaddbacknode(tokens, node);
 	*pos += idx;
 	return (SUCCESS);
@@ -107,37 +103,17 @@ static size_t redirection_handler(t_list **tokens, char *line, size_t *pos)
 		nullstr(&content);
 		return(FAILURE);
 	}
+	node->type = context_guarder(content, 1);
 	listaddbacknode(tokens, node);
+	if (line[0] == CHAR_REDIRECT_OUT && (line[1] == CHAR_AMPERSAND || line[1] == CHAR_PIPE))
+		idx++; //TODO: handles case of ls -la>|out 
+			   //NOTE: it should not give error it should skip that | OR &
 	*pos += idx;
 	return (SUCCESS);
 }
 
 
 static size_t pipe_handler(t_list **tokens, char *line, size_t *pos)
-{
-	t_list *node;
-	size_t idx;
-	char *content;
-
-	idx = 1;
-	if (line[0] == line[1] || (t_metachar)line[1] == CHAR_AMPERSAND)
-		idx++;
-	content = ft_calloc(idx + 1, sizeof(char));
-	if (!content)
-		return (FAILURE);
-	ft_strlcpy(content, line, idx + 1);
-	node = listcreatenode(content);
-	if (!node)
-	{
-		nullstr(&content);
-		return(FAILURE);
-	}
-	listaddbacknode(tokens, node);
-	*pos += idx;
-	return (SUCCESS);
-}
-
-static size_t ampersands_handler(t_list **tokens, char *line, size_t *pos)
 {
 	t_list *node;
 	size_t idx;
@@ -156,6 +132,39 @@ static size_t ampersands_handler(t_list **tokens, char *line, size_t *pos)
 		nullstr(&content);
 		return(FAILURE);
 	}
+	node->type = context_guarder(content, 1);
+	listaddbacknode(tokens, node);
+	if (line[1] == CHAR_AMPERSAND)
+		idx++;
+	*pos += idx;
+	return (SUCCESS);
+}
+
+static size_t ampersands_handler(t_list **tokens, char *line, size_t *pos)
+{
+	t_list *node;
+	size_t idx;
+	char *content;
+
+	idx = 1;
+	if (line[0] == line[1])
+		idx++;
+	if (line[1] == CHAR_REDIRECT_OUT)
+	{
+		*pos += idx; //NOTE: if &> just skip & !
+		return (SUCCESS);
+	}
+	content = ft_calloc(idx + 1, sizeof(char));
+	if (!content)
+		return (FAILURE);
+	ft_strlcpy(content, line, idx + 1);
+	node = listcreatenode(content);
+	if (!node)
+	{
+		nullstr(&content);
+		return(FAILURE);
+	}
+	node->type = context_guarder(content, 1);
 	listaddbacknode(tokens, node);
 	*pos += idx;
 	return (SUCCESS);
@@ -169,7 +178,7 @@ static size_t quotes_handler(t_list **tokens, char *line, size_t *pos)
 	t_metachar target;
 
 	idx = 0;
-	while (line[idx] && !ft_isunitbreaker(line[idx]))
+	while (line[idx] && !ft_ismetachar(line[idx]))
 	{
 		target = line[idx];
 		idx++;
@@ -177,7 +186,7 @@ static size_t quotes_handler(t_list **tokens, char *line, size_t *pos)
 			idx++;
 		if (line[idx])
 			idx++;
-		while (line[idx] && !ft_isunitbreaker(line[idx]) && !ft_isquote(line[idx]))
+		while (line[idx] && !ft_ismetachar(line[idx]) && !ft_isquote(line[idx]))
 			idx++;
 	}
 	content = ft_calloc(idx + 1, sizeof(char));
@@ -190,6 +199,7 @@ static size_t quotes_handler(t_list **tokens, char *line, size_t *pos)
 		nullstr(&content);
 		return(FAILURE);
 	}
+	node->type = context_guarder(content, 1);
 	listaddbacknode(tokens, node);
 	*pos += idx;
 	return (SUCCESS);
@@ -206,7 +216,7 @@ static size_t word_handler(t_list **tokens, char *line, size_t *pos)
 
 	idx = 0;
 
-	while (line[idx] && !ft_isunitbreaker(line[idx]))
+	while (line[idx] && !ft_ismetachar(line[idx]))
 	{
 		if (ft_isquote(line[idx]))
 		{
@@ -230,6 +240,7 @@ static size_t word_handler(t_list **tokens, char *line, size_t *pos)
 		nullstr(&content);
 		return(FAILURE);
 	}
+	node->type = context_guarder(content, 1);
 	listaddbacknode(tokens, node);
 	*pos += idx;
 	return (SUCCESS);

@@ -6,7 +6,7 @@
 /*   By: msidry <msidry@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 14:48:31 by msidry            #+#    #+#             */
-/*   Updated: 2025/05/30 10:37:45 by msidry           ###   ########.fr       */
+/*   Updated: 2025/05/31 12:59:06 by msidry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,26 +62,11 @@ int balancedquotes(char *str)
     while (*str)
     {
         if (*str == CHAR_SQUOTE && dquote % 2 == 0 && backtick % 2 == 0)
-        {
-            if (squote != 0)
-                squote--;
-            else
-                squote++;
-        }
+            squote = !squote;
         else if (*str == CHAR_DQUOTE && squote % 2 == 0 && backtick % 2 == 0)
-        {
-            if (dquote != 0)
-                dquote--;
-            else
-                dquote++;
-        }
+            dquote = !dquote;
         else if (*str == CHAR_BACKTICK && squote % 2 == 0 && dquote % 2 == 0)
-        {
-            if (backtick != 0)
-                backtick--;
-            else
-                backtick++;
-        }
+            backtick = !backtick;
         str++;
     }
     return (squote == 0 && dquote == 0 && backtick == 0);
@@ -108,6 +93,5 @@ int unsupportedcheck(char *str)
         || !ft_strcmp(str, STR_OR)
         || !ft_strcmp(str, STR_SEMICOLON)
         || !ft_strcmp(str, STR_AMPERSAND)
-        || !ft_strcmp(str, STR_PIPEAND)
         );
 }
