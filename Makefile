@@ -123,10 +123,10 @@ run: $(NAME) clean
 debug:  
 	@make run DEBUGMODE=1 SANITIZER=1 TESTUNIT=1
 
-vfrun: clean $(NAME)
+fvrun: clean $(NAME)
 	@valgrind --leak-check=full --show-leak-kinds=all ./$(NAME)
 
-runv: clean $(NAME)
+vrun: clean $(NAME)
 	@valgrind --leak-check=full --show-leak-kinds=all ./$(NAME)
 
 
