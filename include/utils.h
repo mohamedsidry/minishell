@@ -42,7 +42,7 @@ t_list *listfindlastnode(t_list *list);
 t_list *listiterate(t_list *listhead, void *(fun)(void *));
 void *listtrimnodecontent(void *content);
 size_t listsize(t_list *list);
-
+int listvalidatenode(t_list *head, int (*valid)(t_list *node));
 //  ENV VARIABLES HELPER FUNCTIONs
 
 t_envnode *create_node(char *envp);
@@ -57,5 +57,7 @@ char **env_serializer(t_list *envlst);
 // validation functions 
 
 void validator(t_list **tokens);
+int validbalancedquotes(t_list *token);
+int validsupportedmeta(t_list *token);
 
 #endif // UTILS_H

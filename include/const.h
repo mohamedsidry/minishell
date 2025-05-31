@@ -3,6 +3,8 @@
 
 # define FAILURE 1
 # define SUCCESS 0
+# define VALID 1
+# define NONVALID 0
 # ifndef DEBUGMODE
 # define DEBUGMODE 0
 # endif // DEBUGMODE

@@ -1,25 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   validator.c                                        :+:      :+:    :+:   */
+/*   listvalidatenode.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: msidry <msidry@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/29 14:48:31 by msidry            #+#    #+#             */
-/*   Updated: 2025/05/31 15:35:50 by msidry           ###   ########.fr       */
+/*   Created: 2025/05/31 14:47:45 by msidry            #+#    #+#             */
+/*   Updated: 2025/05/31 15:18:20 by msidry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/header.h"
 
-
-void validator(t_list **tokens)
+int listvalidatenode(t_list *head, int (*valid)(t_list *node))
 {
-    if (!tokens || !*tokens
-        || listvalidatenode(*tokens, validbalancedquotes) == NONVALID 
-        || listvalidatenode(*tokens, validsupportedmeta) == NONVALID)
+    t_list *tmp;
+
+    tmp = head;
+    if (!head || !valid)
+        return (VALID);
+    while(tmp)
     {
-        listclearnodes(tokens, listdeletenode);
-        return ;
+        if(valid(tmp) == NONVALID)
+            return (NONVALID);
+        tmp = tmp->next;
     }
+    return (VALID);
 }
