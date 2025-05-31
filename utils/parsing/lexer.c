@@ -279,7 +279,7 @@ static t_token meta_map_context(char *current, t_jobcontext *nextcontext)
 	else if (!ft_strcmp(current, STR_APPEND))
 		return (*nextcontext = OUTFILE, APPEND);
 	else if (!ft_strcmp(current, STR_HEREDOC))
-		return (*nextcontext = LIMIT, APPEND);
+		return (*nextcontext = LIMIT, HEREDOC);
 	return (*nextcontext = DEFAULT, COMMAND);
 }
 
