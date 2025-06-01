@@ -17,7 +17,9 @@ void validator(t_list **tokens)
 {
     if (!tokens || !*tokens
         || listvalidatenode(*tokens, validbalancedquotes) == NONVALID 
-        || listvalidatenode(*tokens, validsupportedmeta) == NONVALID)
+        || listvalidatenode(*tokens, validsupportedmeta) == NONVALID
+        || listvalidatenode(*tokens, validsyntax) == NONVALID
+    )
     {
         listclearnodes(tokens, listdeletenode);
         return ;

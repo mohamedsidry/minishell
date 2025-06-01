@@ -59,5 +59,6 @@ char **env_serializer(t_list *envlst);
 void validator(t_list **tokens);
 int validbalancedquotes(t_list *token);
 int validsupportedmeta(t_list *token);
+int validsyntax(t_list *token);
 
 #endif // UTILS_H

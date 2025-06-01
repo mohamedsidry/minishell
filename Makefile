@@ -61,7 +61,8 @@ PARSING =	utils/parsing/proreadline.c utils/parsing/is_exit.c \
 
 VALIDATION = utils/validation/validator.c \
 			 utils/validation/quotes.c \
-			 utils/validation/supported.c
+			 utils/validation/supported.c \
+			 utils/validation/syntax.c
 
 LINKEDLISTSRC = utils/linkedlist/listaddbacknode.c  \
 				utils/linkedlist/listaddfrontnode.c \
