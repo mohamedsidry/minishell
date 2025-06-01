@@ -16,7 +16,7 @@ Parsing is the action of turning user raw input string to tokens , expand, valid
 - [x] Display prompt and read user input .
 - [x] Lexical tokenization, turn each part of string to meaningful unit .
 - [ ] Expanding env variables (*on progress . . .*) .
-- [ ] Validation of syntax (*on progress . . .*) .
+- [x] Validation of syntax (*on progress . . .*) .
 - [ ] Follow norms .
 - [ ] Full test.
 
