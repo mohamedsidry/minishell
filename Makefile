@@ -62,7 +62,8 @@ PARSING =	utils/parsing/proreadline.c utils/parsing/is_exit.c \
 VALIDATION = utils/validation/validator.c \
 			 utils/validation/quotes.c \
 			 utils/validation/supported.c \
-			 utils/validation/syntax.c
+			 utils/validation/syntax.c \
+			 utils/validation/expanding.c
 
 LINKEDLISTSRC = utils/linkedlist/listaddbacknode.c  \
 				utils/linkedlist/listaddfrontnode.c \
@@ -74,8 +75,10 @@ LINKEDLISTSRC = utils/linkedlist/listaddbacknode.c  \
 				utils/linkedlist/listiterate.c \
 				utils/linkedlist/listprintnode.c \
 				utils/linkedlist/listtrimnodecontent.c \
-				utils/linkedlist/listsize.c\
-				utils/linkedlist/listvalidatenode.c
+				utils/linkedlist/listsize.c \
+				utils/linkedlist/listvalidatenode.c \
+				utils/linkedlist/listmap.c \
+				utils/linkedlist/listnodedup.c
 
 
 TEST =	test/modenotifier.c test/run_unit_tests.c \

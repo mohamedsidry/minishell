@@ -43,6 +43,8 @@ t_list *listiterate(t_list *listhead, void *(fun)(void *));
 void *listtrimnodecontent(void *content);
 size_t listsize(t_list *list);
 int listvalidatenode(t_list *head, int (*valid)(t_list *node));
+t_list *listmap(t_list *head, t_list *(fun)(t_list *node));
+t_list *listnodedup(t_list *node);
 //  ENV VARIABLES HELPER FUNCTIONs
 
 t_envnode *create_node(char *envp);
@@ -56,9 +58,11 @@ char **env_serializer(t_list *envlst);
 
 // validation functions 
 
-void validator(t_list **tokens);
+void validator(t_list **tokens, t_list *env);
 int validbalancedquotes(t_list *token);
 int validsupportedmeta(t_list *token);
 int validsyntax(t_list *token);
+int validexpanding(t_list *tokens, t_list *env);
+
 
 #endif // UTILS_H

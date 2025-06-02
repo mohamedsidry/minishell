@@ -13,12 +13,13 @@
 #include "../../include/header.h"
 
 
-void validator(t_list **tokens)
+void validator(t_list **tokens, t_list *env)
 {
     if (!tokens || !*tokens
-        || listvalidatenode(*tokens, validbalancedquotes) == NONVALID 
+        || listvalidatenode(*tokens, validbalancedquotes) == NONVALID
         || listvalidatenode(*tokens, validsupportedmeta) == NONVALID
         || listvalidatenode(*tokens, validsyntax) == NONVALID
+        || validexpanding(*tokens, env) == NONVALID
     )
     {
         listclearnodes(tokens, listdeletenode);

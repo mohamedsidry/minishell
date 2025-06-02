@@ -18,6 +18,7 @@ typedef enum e_metachar
 	CHAR_BACKSLASH = '\\',
 	CHAR_BACKTICK = '`',
 	CHAR_HYPHEN = '-',
+	CHAR_DOLLAR = '$',
 
 } t_metachar;
 
