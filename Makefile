@@ -65,6 +65,13 @@ VALIDATION = utils/validation/validator.c \
 			 utils/validation/syntax.c \
 			 utils/validation/expanding.c
 
+COMMANDSRC = utils/command/serializer.c \
+			 utils/command/command_manager.c \
+			 utils/command/create_command.c \
+			 utils/command/delete_command.c \
+			 utils/command/read_command.c \
+			 utils/command/update_command.c 
+
 LINKEDLISTSRC = utils/linkedlist/listaddbacknode.c  \
 				utils/linkedlist/listaddfrontnode.c \
 				utils/linkedlist/listclearnodes.c \
@@ -78,15 +85,16 @@ LINKEDLISTSRC = utils/linkedlist/listaddbacknode.c  \
 				utils/linkedlist/listsize.c \
 				utils/linkedlist/listvalidatenode.c \
 				utils/linkedlist/listmap.c \
-				utils/linkedlist/listnodedup.c
+				utils/linkedlist/listnodedup.c \
+				utils/linkedlist/listclearcommands.c
 
 
 TEST =	test/modenotifier.c test/run_unit_tests.c \
 		test/echo.c test/print_arr.c test/display_env.c \
-		test/display_tokens.c
+		test/display_tokens.c test/display_commands.c
 
 
-SRCS = $(MAIN) $(UTILS) $(PARSING) $(LINKEDLISTSRC) $(ENVSRCS) $(VALIDATION) $(TEST)
+SRCS = $(MAIN) $(UTILS) $(PARSING) $(LINKEDLISTSRC) $(ENVSRCS) $(VALIDATION) $(COMMANDSRC) $(TEST)
 
 vpath %.h include
 INCLUDES = header.h const.h error.h  test.h typedef.h utils.h

@@ -45,6 +45,8 @@ size_t listsize(t_list *list);
 int listvalidatenode(t_list *head, int (*valid)(t_list *node));
 t_list *listmap(t_list *head, t_list *(fun)(t_list *node));
 t_list *listnodedup(t_list *node);
+void listclearcommands(t_list **chain, void (del)(t_command **node));
+
 //  ENV VARIABLES HELPER FUNCTIONs
 
 t_envnode *create_node(char *envp);
@@ -56,13 +58,23 @@ char **env_serializer(t_list *envlst);
 
 
 
-// validation functions 
+//  TOKEN VALIDATION HELPER FUNCTIONs
 
-void validator(t_list **tokens, t_list *env);
+void validator(t_list **tokens);
 int validbalancedquotes(t_list *token);
 int validsupportedmeta(t_list *token);
 int validsyntax(t_list *token);
 int validexpanding(t_list *tokens, t_list *env);
+
+
+//  COMMAND BUILDING HELPER FUNCTIONs
+
+t_list *serializer(t_list **commands, t_list *token);
+t_command *command_manager(t_command **cmds, t_list *node, t_token tkn, t_action crud);
+t_command *create_command(void);
+void delete_command(t_command **commandptr);
+t_command *update_command(t_command *cmd, t_list *node, t_token type);
+void read_command(t_command *command);
 
 
 #endif // UTILS_H

@@ -13,6 +13,7 @@ void echo(char *str);
 void  print_arr(char **arr);
 void display_env(t_list *envlst);
 void display_tokens(t_list *lst);
+void display_commands(t_list *commands);
 
 // UNIT TESTS 
 void run_unit_tests(void);

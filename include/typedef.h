@@ -67,10 +67,17 @@ typedef struct s_envnode
 
 typedef struct s_command
 {
-	char *exe;
+	char *executable;
+	size_t pid;
 	int runinbackground;
 	int waitforit;
-
+	t_list *args;
+	t_list *infiles;
+	t_list *outfiles;
+	t_list *appendfiles;
+	t_list *limiters;
+	int pipe[2];
 } t_command;
 
+//typedef struct
 #endif // TYPEDEF_H
