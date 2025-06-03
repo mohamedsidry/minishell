@@ -15,7 +15,8 @@ void listclearcommands(t_list **chain, void (del)(t_command **node))
     while(current)
     {
         tmp = current->next;
-        del((t_command **)&current->content);        
+        del((t_command **)&current->content); 
+        free(current);
         current = tmp;
     }
     *chain = NULL;

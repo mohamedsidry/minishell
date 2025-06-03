@@ -11,17 +11,16 @@ void read_command(t_command *cmd)
         return ;
 
     }
-    printf("executable : %s\n", cmd->executable);
-    if (cmd->args || 0 == printf("empty args\n"))
-        listcontent(cmd->args, "command args");
-    if (cmd->infiles || 0 == printf("empty infiles\n"))
-        listcontent(cmd->infiles, "command infiles");
-    if (cmd->outfiles || 0 == printf("empty oufile\n"))
-        listcontent(cmd->outfiles, "command args");
-    if (cmd->appendfiles || 0 == printf("empty appends\n"))
-        listcontent(cmd->appendfiles, "command append files");
-    if (cmd->limiters || 0 == printf("empty limiters\n"))
-        listcontent(cmd->limiters, "command limiters");
+    if (cmd->args || 0 == printf("args is empty\n"))
+        listcontent(cmd->args, "args : ");
+    if (cmd->infiles || 0 == printf("infile is empty\n"))
+        listcontent(cmd->infiles, "infiles : ");
+    if (cmd->outfiles || 0 == printf("outfile is empty\n"))
+        listcontent(cmd->outfiles, "outfiles : ");
+    if (cmd->appendfiles || 0 == printf("appen files empty\n"))
+        listcontent(cmd->appendfiles, "append files : ");
+    if (cmd->limiters || 0 == printf("limiters is empty\n"))
+        listcontent(cmd->limiters, "limiters : ");
 }
 
 
@@ -32,13 +31,19 @@ static void listcontent(t_list *list, char *context)
     idx = 0;
     if (!list)
     {
-        printf("context %s is empty !!\n", context);
+        printf("%s is empty !!\n", context);
         return ;
     }
+    printf("%s", context);
     while (list)
     {
-        printf("%s [%d] is content is %s\n", context, idx, (char *)list->content);
+        printf("index[%d]=`%s`", idx, (char *)list->content);
+        if (list->next)
+            printf(", ");
+        else
+            printf("\n");
         list = list->next;
         idx++;
     }
+    
 }

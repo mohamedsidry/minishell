@@ -26,6 +26,7 @@ typedef enum s_jobcontext
     CMDARG,
     INFILE,
     OUTFILE,
+    APPENDFILE,
     LIMIT,
     REDIRECTION,
 } t_jobcontext;
