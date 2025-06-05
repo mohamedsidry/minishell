@@ -48,6 +48,7 @@ typedef enum s_action
 	READ = 2,
 	UPDATE = 4,
 	DELETE = 8,
+	PATCH = 16,
 
 } t_action;
 

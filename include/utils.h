@@ -16,7 +16,7 @@ char *ft_trimspaces(const char *str);
 int ft_isspace(unsigned char  c);
 void *ft_calloc(size_t count, size_t size);
 void *ft_strchr(void *ptr, int byte);
-char *ft_joinstrs(size_t count, ...);
+char *ft_joinstrs(char *sep, size_t count, ...);
 char *ft_concatenate(const char *s1, const char *s2, const char *sep);
 int ft_isquote(unsigned char c);
 int ft_ispipe(unsigned char c);
@@ -58,7 +58,7 @@ void read_node(t_envnode *node);
 char *getvalue(t_list *lst, char *key);
 void setvalue(t_list *lst, char *key, char *newvalue);
 char **env_serializer(t_list *envlst);
-
+t_envnode *update_node(t_list **envlst, char *key, char *value);
 
 
 //  TOKEN VALIDATION HELPER FUNCTIONs

@@ -12,10 +12,8 @@ int main(int argc, char *argv[], char *envp[])
 	cmds = NULL;
 	(void)argc;
 	(void)argv;
-	modenotifier(); //NOTE: display message of debuging mode .
-	run_unit_tests(); //NOTE: test functionality of pace of codes .
-	env_manager(&lstenv, envp, CREATE | UPDATE); //NOTE: create and modify env var list
-	display_env(lstenv); //NOTE: display current env key:value .
+	env_manager(&lstenv, envp, CREATE | PATCH); //NOTE: create and modify env var list
+	test(&lstenv, &cmds, &line);
 	while (true)
 	{
 		proreadline(PROMPT, &line, &lstenv); //NOTE: prompt and store user input in line .

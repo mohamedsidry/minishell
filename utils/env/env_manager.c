@@ -4,7 +4,7 @@
 static void *create_env(t_list **lstenv, char *envp[]);
 static void *delete_env(t_list **lstenv);
 static void *read_env(t_list *lstenv);
-void        *update_env(t_list *lstenv);
+void        *patch_env(t_list *lstenv);
 
 void *env_manager(t_list **env, char **envp ,t_action crud)
 {
@@ -18,8 +18,8 @@ void *env_manager(t_list **env, char **envp ,t_action crud)
         ptr = delete_env(env);
     if (crud & READ)
         ptr = read_env(*env);
-    if (crud & UPDATE)
-        ptr = update_env(*env); //NOTE: update path to include cwd and increase SHLVL
+    if (crud & PATCH)
+        ptr = patch_env(*env); //NOTE: update path to include cwd and increase SHLVL
     return (ptr);
 }
 
@@ -75,7 +75,7 @@ static void *read_env(t_list *lstenv)
     return (lstenv);
 }
 
-void  *update_env(t_list *lstenv)
+void  *patch_env(t_list *lstenv)
 {
     char *pwd;
     char *path;
@@ -90,7 +90,7 @@ void  *update_env(t_list *lstenv)
         if (!path)
             setvalue(lstenv, PATH, ft_strdup(pwd));
         else if (!ft_strstr(path, pwd))
-            setvalue(lstenv, PATH, ft_joinstrs(2, path, pwd));
+            setvalue(lstenv, PATH, ft_joinstrs(":",2, path, pwd));
     }
     shlvl = getvalue(lstenv, SHLVL);
     if (shlvl)

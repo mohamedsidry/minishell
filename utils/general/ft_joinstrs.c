@@ -3,7 +3,7 @@
 
 static char *ft_concat(char *prev, const char *newstr);
 
-char *ft_joinstrs(size_t count, ...)
+char *ft_joinstrs(char *sep, size_t count, ...)
 {
     va_list arg;
     char *str;
@@ -21,12 +21,7 @@ char *ft_joinstrs(size_t count, ...)
             return (NULL);
         if (idx < count - 1)
         {
-            joined = ft_concat(joined, ":");
-            if (!joined)
-                return (NULL);
-        }else
-        {
-            joined = ft_concat(joined, "/");
+            joined = ft_concat(joined, sep);
             if (!joined)
                 return (NULL);
         }

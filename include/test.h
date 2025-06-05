@@ -14,6 +14,7 @@ void  print_arr(char **arr);
 void display_env(t_list *envlst);
 void display_tokens(t_list *lst);
 void display_commands(t_list *commands);
+void test(t_list **env, t_list **commands, char **line);
 
 // UNIT TESTS 
 void run_unit_tests(void);
@@ -23,7 +24,6 @@ typedef enum s_jobcontext
 {
     DEFAULT,
     CMD,
-    CMDARG,
     INFILE,
     OUTFILE,
     APPENDFILE,

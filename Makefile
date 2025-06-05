@@ -55,7 +55,8 @@ ENVSRCS =	utils/env/env_manager.c \
 			utils/env/read_node.c \
 			utils/env/getvalue.c \
 			utils/env/setvalue.c \
-			utils/env/env_serializer.c 
+			utils/env/env_serializer.c \
+			utils/env/update_node.c 
 
 PARSING =	utils/parsing/proreadline.c utils/parsing/is_exit.c \
 	  		utils/parsing/parsing_handler.c utils/parsing/lexer.c
@@ -90,7 +91,7 @@ LINKEDLISTSRC = utils/linkedlist/listaddbacknode.c  \
 				utils/linkedlist/listclearcommands.c
 
 
-TEST =	test/modenotifier.c test/run_unit_tests.c \
+TEST =	test/test.c test/modenotifier.c test/run_unit_tests.c \
 		test/echo.c test/print_arr.c test/display_env.c \
 		test/display_tokens.c test/display_commands.c
 
