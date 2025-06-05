@@ -27,7 +27,8 @@ t_command *update_command(t_command *cmd, t_list *node, t_token type)
         listdeletenode(&new);
         return (cmd);
     }
-    
+    if (type == FILE_IN || type == FILE_OUT || type == FILE_APPEND)
+        listaddbacknode(&cmd->redirections, listnodedup(node));
     return (cmd);
 }
 

@@ -21,6 +21,8 @@ void read_command(t_command *cmd)
         listcontent(cmd->appendfiles, "append files : ");
     if (cmd->limiters || 0 == printf("limiters is empty\n"))
         listcontent(cmd->limiters, "limiters : ");
+    if (cmd->redirections || 0 == printf("redirections is empty\n"))
+        listcontent(cmd->redirections, "ordered redirections : ");
 }
 
 

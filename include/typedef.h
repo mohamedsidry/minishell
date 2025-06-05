@@ -69,14 +69,14 @@ typedef struct s_command
 {
 	char *executable;
 	size_t pid;
-	int runinbackground;
-	int waitforit;
+	t_list *redirections;
 	t_list *args;
 	t_list *infiles;
 	t_list *outfiles;
 	t_list *appendfiles;
 	t_list *limiters;
 	int pipe[2];
+	int exitcode;
 } t_command;
 
 //typedef struct

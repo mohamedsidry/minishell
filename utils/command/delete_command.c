@@ -11,6 +11,7 @@ void delete_command(t_command **cmd)
     listclearnodes(&(*cmd)->outfiles, listdeletenode);
     listclearnodes(&(*cmd)->appendfiles, listdeletenode);
     listclearnodes(&(*cmd)->limiters, listdeletenode);
+    listclearnodes(&(*cmd)->redirections, listdeletenode);
     (*cmd)->pipe[0] = -1;
     (*cmd)->pipe[1] = -1;
     free(*cmd);

@@ -14,9 +14,9 @@ t_command *create_command(void)
     cmd->outfiles = NULL;
     cmd->appendfiles = NULL;
     cmd->limiters = NULL;
+    cmd->redirections = NULL;
     cmd->pipe[0] = -1;
     cmd->pipe[1] = -1;
-
     //TODO: set all to null memset(cmd, sizeof(t_command));
     //TODO: set pipe read and write end to -1 .
     return (cmd);
