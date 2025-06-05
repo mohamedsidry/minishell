@@ -28,6 +28,9 @@ int ft_isampersand(unsigned char c);
 int ft_issemicolon(unsigned char c);
 int ft_isaflag(char *arg);
 int ft_startwith(char *str, unsigned char c);
+char *ft_itoa(char *nbr);
+char *ft_strstr(char *str1, char *str2);
+int ft_strncmp(const char *str1, const char *str2, size_t n);
 
 // LIST HELPER FUNCTIONs !
 

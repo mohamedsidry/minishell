@@ -79,14 +79,21 @@ void  *update_env(t_list *lstenv)
 {
     char *pwd;
     char *path;
-    char *newshlvl;
-    char *newpath;
+    char *shlvl;
 
+    if (!lstenv)
+        return (NULL);
     pwd = getvalue(lstenv, PWD);
-    path = getvalue(lstenv, PATH); 
-    newpath = ft_joinstrs(2, path, pwd);
-    newshlvl = ft_strdup("1337"); //TODO: should implament atoi++ then itoa 
-    setvalue(lstenv, PATH, newpath);
-    setvalue(lstenv, SHLVL, newshlvl);
+    if (pwd)
+    {
+        path = getvalue(lstenv, PATH);
+        if (!path)
+            setvalue(lstenv, PATH, ft_strdup(pwd));
+        else if (!ft_strstr(path, pwd))
+            setvalue(lstenv, PATH, ft_joinstrs(2, path, pwd));
+    }
+    shlvl = getvalue(lstenv, SHLVL);
+    if (shlvl)
+        setvalue(lstenv, SHLVL, ft_itoa(shlvl));
     return (NULL);
 }

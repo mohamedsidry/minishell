@@ -46,7 +46,8 @@ UTILS = utils/general/nullstr.c  utils/general/ft_strcmp.c \
 		utils/general/ft_isredirection.c utils/general/ft_isunitbreaker.c \
 		utils/general/skip_space.c utils/general/ft_ismetachar.c \
 		utils/general/ft_isampersand.c utils/general/ft_issemicolon.c \
-		utils/general/ft_startwith.c
+		utils/general/ft_startwith.c utils/general/ft_itoa.c \
+		utils/general/ft_strstr.c
 		
 ENVSRCS =	utils/env/env_manager.c \
 			utils/env/create_node.c \
