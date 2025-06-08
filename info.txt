@@ -1,0 +1,344 @@
+# Minishell Execution - Visual Guide & Behind the Scenes
+
+## 1. Overall Architecture Flow
+
+
+USER INPUT: "ls -l | grep .c > output.txt"
+     ↓
+┌─────────────────┐
+│   PARSING       │ ← mohmed's work
+│   (Already Done)│
+└─────────────────┘
+     ↓
+┌─────────────────┐
+│   EXECUTION     │ ← my work
+│   (What we built)│
+└─────────────────┘
+     ↓
+SYSTEM CALLS & PROCESSES
+
+
+## 2. Data Structure Flow (Visual)
+
+### Input Processing:
+
+"ls -l | grep .c > output.txt"
+         ↓ (Parsing creates)
+┌─────────────────────────────────┐
+│ t_list of t_command structures  │
+├─────────────────┬───────────────┤
+│   Command 1     │   Command 2   │
+│   executable:"ls"│ executable:"grep"│
+│   args:"-l"     │ args:".c"     │
+│   pipe:[3,4]    │ outfiles:"output.txt"│
+└─────────────────┴───────────────┘
+
+
+### Behind the Scenes - Data Structure Details:
+
+// Command 1: "ls -l"
+t_command cmd1 = {
+    .executable = "ls",
+    .args = ["-l"] (linked list),
+    .infiles = NULL,
+    .outfiles = NULL,
+    .pipe = [3, 4],  // pipe file descriptors
+    .pid = 0         // will store process ID
+};
+
+// Command 2: "grep .c"
+t_command cmd2 = {
+    .executable = "grep",
+    .args = [".c"] (linked list),
+    .infiles = NULL,
+    .outfiles = ["output.txt"] (linked list),
+    .pipe = [-1, -1],
+    .pid = 0
+};
+
+
+## 3. Execution Pipeline (Step by Step)
+
+### Step 1: Pipeline Detection
+
+execute_pipeline() called
+     ↓
+┌─────────────────────┐
+│ Count commands      │ → 2 commands detected
+│ Setup pipes needed  │ → 1 pipe needed (between cmd1 & cmd2)
+└─────────────────────┘
+
+
+### Step 2: Pipe Creation
+
+setup_pipes() creates:
+
+    ls -l     │     grep .c
+      ↓       │       ↑
+  ┌─────┐     │   ┌─────┐
+  │ fd=4│ ────┼──→│ fd=3│
+  └─────┘     │   └─────┘
+   write      │    read
+    end       │     end
+
+
+**Behind the Scenes:**
+
+// System call: pipe(cmd1.pipe)
+// Creates: cmd1.pipe[0] = 3 (read end)
+//          cmd1.pipe[1] = 4 (write end)
+
+// In child process 1 (ls):
+dup2(cmd1.pipe[1], STDOUT_FILENO);  // stdout → pipe write
+close(cmd1.pipe[0]);  // close unused read end
+
+// In child process 2 (grep):
+dup2(cmd1.pipe[0], STDIN_FILENO);   // stdin ← pipe read
+close(cmd1.pipe[1]);  // close unused write end
+
+
+### Step 3: Process Creation & Management
+
+Main Process (PID: 1000)
+     │
+     ├─ fork() → Child 1 (PID: 1001) → exec("ls -l")
+     │
+     └─ fork() → Child 2 (PID: 1002) → exec("grep .c")
+     
+Wait for both children to complete
+
+
+## 4. Built-in vs External Commands
+
+### Built-in Command Flow:
+
+"cd /home/user"
+     ↓
+┌─────────────────────┐
+│ is_builtin("cd")    │ → Returns 1 (true)
+└─────────────────────┘
+     ↓
+┌─────────────────────┐
+│ execute_builtin()   │ → Calls builtin_cd()
+└─────────────────────┘
+     ↓
+┌─────────────────────┐
+│ chdir("/home/user") │ → System call
+│ Update PWD env var  │ → Environment updated
+└─────────────────────┘
+
+
+### External Command Flow:
+
+"ls -l"
+     ↓
+┌─────────────────────┐
+│ is_builtin("ls")    │ → Returns 0 (false)
+└─────────────────────┘
+     ↓
+┌─────────────────────┐
+│ find_executable()   │ → Searches PATH
+└─────────────────────┘
+     ↓
+┌─────────────────────┐
+│ fork() + execve()   │ → New process
+└─────────────────────┘
+
+
+**PATH Resolution Behind the Scenes:**
+
+// PATH = "/usr/bin:/bin:/usr/local/bin"
+// Looking for "ls"
+
+// Check: "/usr/bin/ls" → access("/usr/bin/ls", X_OK)
+// If exists and executable → return "/usr/bin/ls"
+// If not, continue...
+
+// Check: "/bin/ls" → access("/bin/ls", X_OK)  
+// Found! Return "/bin/ls"
+
+
+## 5. I/O Redirection Visual
+
+### Input Redirection: `cat < input.txt`
+
+BEFORE:
+┌─────────┐    ┌─────────┐
+│  stdin  │    │   cat   │
+│  (kbd)  │ ──→│ process │
+└─────────┘    └─────────┘
+
+AFTER:
+┌─────────┐    ┌─────────┐
+│input.txt│    │   cat   │
+│  (fd=3) │ ──→│ process │
+└─────────┘    └─────────┘
+
+
+**Behind the Scenes:**
+
+// Open file
+int fd = open("input.txt", O_RDONLY);  // fd = 3
+
+// Redirect stdin
+dup2(fd, STDIN_FILENO);  // Now stdin reads from file
+close(fd);  // Close original fd
+
+
+### Output Redirection: `echo "hello" > output.txt`
+
+BEFORE:
+┌─────────┐    ┌─────────┐
+│  echo   │    │ stdout  │
+│ process │ ──→│ (screen)│
+└─────────┘    └─────────┘
+
+AFTER:
+┌─────────┐    ┌─────────┐
+│  echo   │    │output.txt│
+│ process │ ──→│  (fd=3) │
+└─────────┘    └─────────┘
+
+
+### Heredoc: `cat << EOF`
+
+USER TYPES:
+> line 1
+> line 2  
+> EOF
+
+BEHIND THE SCENES:
+┌─────────────┐
+│Create pipe  │ → pipe_fd[0], pipe_fd[1]
+├─────────────┤
+│Write user   │ → write(pipe_fd[1], "line 1\n")
+│input to pipe│ → write(pipe_fd[1], "line 2\n")
+├─────────────┤
+│Close write  │ → close(pipe_fd[1])
+│Redirect read│ → dup2(pipe_fd[0], STDIN_FILENO)
+└─────────────┘
+
+
+## 6. Signal Handling Visual
+
+### Normal Operation:
+
+┌─────────────┐    ┌─────────────┐
+│   Parent    │    │   Child     │
+│ (minishell) │    │ (command)   │
+│             │    │             │
+│ Waiting...  │    │ Executing   │
+└─────────────┘    └─────────────┘
+
+
+### Ctrl+C Pressed:
+
+         SIGINT
+           ↓
+┌─────────────┐    ┌─────────────┐
+│   Parent    │    │   Child     │
+│ Handles     │    │ Terminates  │
+│ signal      │    │             │
+│ Shows new   │    │             │
+│ prompt      │    │             │
+└─────────────┘    └─────────────┘
+
+
+**Behind the Scenes:**
+
+// Global variable (subject requirement)
+int g_signal_received = 0;
+
+// Signal handler
+void signal_handler(int sig) {
+    g_signal_received = sig;  // Store signal number only
+    if (sig == SIGINT) {
+        printf("\n");         // New line
+        rl_on_new_line();     // Tell readline about new line
+        rl_replace_line("", 0); // Clear current line
+        rl_redisplay();       // Show new prompt
+    }
+}
+
+
+## 7. Complete Example Walkthrough
+
+### Command: `ls -l | grep .c > files.txt && echo "Done"`
+
+#### Phase 1: Parsing (Already Done)
+
+Creates 3 commands:
+┌─────────┐  ┌─────────┐  ┌─────────┐
+│ ls -l   │  │grep .c  │  │echo Done│
+│pipe:[3,4]│  │>files.txt│  │        │
+└─────────┘  └─────────┘  └─────────┘
+     │             │            │
+     └─────────────┼────────────┘
+                   │
+            (connected by &&)
+
+
+#### Phase 2: Execution
+
+Step 1: Execute "ls -l | grep .c > files.txt"
+├─ Create pipe(3,4)
+├─ Fork process for 'ls': 
+│  ├─ dup2(4, STDOUT) → ls output goes to pipe
+│  └─ execve("/bin/ls", ["ls", "-l"])
+├─ Fork process for 'grep':
+│  ├─ dup2(3, STDIN) → grep input comes from pipe
+│  ├─ open("files.txt", O_WRONLY|O_CREAT|O_TRUNC)
+│  ├─ dup2(files_fd, STDOUT) → grep output goes to file
+│  └─ execve("/bin/grep", ["grep", ".c"])
+└─ Wait for both processes, check exit status
+
+Step 2: If first pipeline succeeded (exit status 0):
+└─ Execute "echo Done" (built-in, no fork needed)
+
+
+## 8. What's Still Missing for Complete Implementation
+
+### Critical Missing Parts:
+
+1. **Environment Variable Expansion ($VAR, $?)**
+
+   // Need to expand: echo "Hello $USER, exit code: $?"
+   // Before execution, replace $USER with actual value
+   // Replace $? with last exit status
+
+
+2. **Quote Handling in Execution**
+
+   // echo "Hello World" vs echo 'Hello $USER'
+   // Double quotes: expand variables
+   // Single quotes: literal string
+
+
+3. **Logical Operators (&& and ||)**
+
+   // cmd1 && cmd2  → execute cmd2 only if cmd1 succeeds
+   // cmd1 || cmd2  → execute cmd2 only if cmd1 fails
+
+
+4. **Better Error Handling**
+
+   // Handle edge cases:
+   // - Permission denied
+   // - File not found
+   // - Directory vs file errors
+
+
+5. **Memory Management Improvements**
+
+   // Ensure all malloc'd memory is freed
+   // Handle SIGTERM gracefully
+   // Clean up child processes properly
+
+## 9. Key Points for Corrector Explanation
+
+### Execution Flow Summary:
+1. **Input**: Parsed command 
+2. **Pipeline Setup**: Create pipes, fork processes
+3. **I/O Setup**: Handle all redirection types
+4. **Command Execution**: Built-ins in parent, externals in children
+5. **Cleanup**: Wait for processes, clean up resources
